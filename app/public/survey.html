@@ -198,7 +198,7 @@
         var newFriend = {
             name: $("#name").val().trim(),
             photo: $("#image").val().trim(),
-            scorers: scoreArray
+            scores: scoreArray
         };
 
         $.post("/api/survey", newFriend, function (data) {
@@ -213,8 +213,6 @@
             alert("data");
             console.log(data);
         });
-
-
         // console.log(newFriend);
     });
 </script>
