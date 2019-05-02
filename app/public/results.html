@@ -5,11 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Results</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 
     <h1>You matched with:</h1>
     <div id="matches"></div>
+    <div class="card">
+            <div class="card-body">
+              <h2 id="name">Name</h2>
+              <div id="stats">
+                <h3><strong>Photo:</strong> <span id="photo"></span></h3>
+                <h3><strong>Score:</strong> <span id="score"></span></h3>
+              </div>
+            </div>
+          </div>
+
     
 </body>
+<script type="text/javascript">
+ 
+      var searchedCharacter = $("#matches").val().trim();
+      $.get("/api/survey", function(data) {
+        console.log(data);
+        if (data) {
+          $("#stats").show();
+          $("#name").text(data.name);
+          $("#photo").text(data.photo);
+          $("#score").text(data.scores);
+        }
+        else {
+          $("#name").text("No Matching Friends");
+          $("#stats").hide();
+        }
+      });
+  </script>
 </html>

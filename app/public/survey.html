@@ -23,7 +23,6 @@
             <div class="about">
                 <label class="name">Name(Required)</label><br>
                 <input type="name" class="form" id="name"><br>
-
                 <label class="image">Link to Photo Image(Required)</label><br>
                 <input type="text" class="form" id="image">
             </div>
@@ -180,17 +179,20 @@
                 </div>
             </div>
             <br>
-                <button class="btn btn-primary btn-lg"><span class="fa fa-check-circle"></span> Submit</button>
+           
+            <a href="/results">dsafs</a>
+            
         </div>
     </form>
-
+    <a href="/results"><button class="btn btn-primary btn-lg"><span class="fa fa-check-circle"></span> Submit</button></a>
 </body>
 
 <script type="text/javascript">
     $("button").on("click", function (event) {
-        event.preventDefault();
+        // event.preventDefault();
 
-        var scoreArray = []
+        var scoreArray = [];
+
         for (let i = 1; i <= 10; i++) {
             scoreArray.push(parseInt($("#option" + i).val()));
         }
@@ -203,16 +205,8 @@
 
         $.post("/api/survey", newFriend, function (data) {
 
-            if(data){
-                alert("DAT@REQDFVAS")
-            }else {
-                alert("ELSE!!")
-            }
-            console.log("ADDED To POST!");
-            //select all values from user input
-            alert("data");
-            console.log(data);
-        });
+            alert("Submitted!");
+           });
         // console.log(newFriend);
     });
 </script>
