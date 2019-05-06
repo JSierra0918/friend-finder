@@ -5,9 +5,8 @@ var friendsData = [{
     },
     {
         name: "Rick Pat",
-        photo: "https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjl7uKTh_jhAhVymuAKHVVCAJoQjRx6BAgBEAU&url=https%3A%2F%2Fyoutubepoop.fandom.com%2Fwiki%2FRick-Pat&psig=AOvVaw1RQ9M9CP97hEepVK7c8j9Z&ust=1556721875129801",
-        scores: [4, 3, 2, 4, 3, 5, 2, 4, 2, 3],
-        difference: 0
+        photo: "https://upload.wikimedia.org/wikipedia/en/3/33/Patrick_Star.svg",
+        scores: [4, 3, 2, 4, 3, 5, 2, 4, 2, 3]
     },
     {
         name: "Sandy Cheeks",

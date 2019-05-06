@@ -5,13 +5,23 @@
     <meta charset="UTF-8">
     <title>Friend Finder Survey</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="https://code.jquery.com/jquery.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+        integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
 
     <link rel="stylesheet" href="./assets/css/style.css">
-
 </head>
 
 <body>
@@ -22,9 +32,10 @@
             <h3>About You</h3>
             <div class="about">
                 <label class="name">Name(Required)</label><br>
-                <input type="name" class="form" id="name"><br>
-                <label class="image">Link to Photo Image(Required)</label><br>
-                <input type="text" class="form" id="image">
+                <input type="name" class="form" id="name" required><br>
+                <label class="image">Link to Photo Image</label><br>
+                <input type="file" class="form" id="image" onchange="previewFile()"><br>
+                <img src="" height="200" alt="Image preview..." id="imagePhoto">
             </div>
             <hr>
             <h3>Question 1</h3>
@@ -179,36 +190,156 @@
                 </div>
             </div>
             <br>
-           
-            <a href="/results">dsafs</a>
-            
         </div>
     </form>
-    <a href="/results"><button class="btn btn-primary btn-lg"><span class="fa fa-check-circle"></span> Submit</button></a>
-</body>
+    <!-- <a href="/results"><button class="btn btn-primary btn-lg"><span class="fa fa-check-circle"></span> Submit</button></a> -->
+    <button class="btn btn-primary btn-lg"><span class="fa fa-check-circle"></span> Submit</button>
 
-<script type="text/javascript">
-    $("button").on("click", function (event) {
-        // event.preventDefault();
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
 
-        var scoreArray = [];
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-stuff"></div>
 
-        for (let i = 1; i <= 10; i++) {
-            scoreArray.push(parseInt($("#option" + i).val()));
+            <div class="flex-container">
+                <div class="card2">
+                    <img src='https://en.wikipedia.org/wiki/Patrick_Star#/media/File:Patrick_Star.svg' alt=""
+                        style="width:100%">
+                    <h1>${JSON.stringify(matchInfo[0].name)}</h1>
+                    <p class="title"></p>
+                    <p>Matching score: </p>
+                    <div style="margin: 24px 0;">
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-dribbble"></i></a>
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-linkedin"></i></a>
+                        <p><button>Contact</button></p>
+                    </div>
+                </div>
+                <div class="card2">
+                        <img src='https://static.comicvine.com/uploads/original/11132/111325030/5880119-spongebob%20squarepants%20gary%20the%20snail.jpg' alt=""
+                            style="width:100%">
+                        <p class="title">sponge</p>
+                        <p>Matching score: </p>
+                        <div style="margin: 24px 0;">
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-dribbble"></i></a>
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-linkedin"></i></a>
+                            <p><button>Contact</button></p>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        $("button").on("click", function (event) {
+            // event.preventDefault();
+            modal.style.display = "block";
+
+            var scoreArray = [];
+            var userImage = $("#imagePhoto").attr('src');
+            //store user image into session so we can reuse users info
+            sessionStorage.setItem("userImage", userImage);
+
+            for (let i = 1; i <= 10; i++) {
+                var options = $("#option" + i);
+                if (options.val() === NaN) {
+                    console.log("Is NAN!!");
+                    options.addClass("nan");
+                    alert("You must fill out all forms");
+                } else {
+                    if (options.hasClass("nan")) {
+                        options.removeClass("nan");
+                    }
+                    scoreArray.push(parseInt(options.val()));
+                }
+            }
+
+            var newFriend = {
+                name: $("#name").val().trim(),
+                // photo: $("#image").val().trim(),
+                photo: sessionStorage.getItem("userImage"),
+                scores: scoreArray
+            };
+
+            $.post("/api/survey", newFriend, function (data) {
+
+                // alert(JSON.stringify(data[0]));
+
+                console.log(data);
+
+                var userInfo = data[0].newFriend;
+                var matchInfo = data[1].matchingFriend;
+
+                console.log(userInfo);
+                console.log(matchInfo[0]);
+
+
+                $(".modal-stuff").append(`
+                <div class="card2">
+                        <img src= '${JSON.stringify(matchInfo[0].photo)}' alt="" style="width:100%">
+                        <h1>${JSON.stringify(matchInfo[0].name)}</h1>
+                        <p class="title"></p>
+                        <p>Matching score: </p>
+                         <div style="margin: 24px 0;">
+                            <a href="#"><i class="fa fa-twitter"></i></a>  
+                            <a href="#"><i class="fa fa-dribbble"></i></a> 
+                            <a href="#"><i class="fa fa-facebook"></i></a> 
+                            <a href="#"><i class="fa fa-linkedin"></i></a>  
+                            <p><button>Contact</button></p>
+                        </div>
+                 </div>`);
+
+                // $("#myModal").modal("show");
+
+                modal.style.display = "block";
+            });
+        });
+
+        function previewFile() {
+            var preview = document.querySelector('img');
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                preview.src = reader.result;
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('myModal');
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
         }
 
-        var newFriend = {
-            name: $("#name").val().trim(),
-            photo: $("#image").val().trim(),
-            scores: scoreArray
-        };
-
-        $.post("/api/survey", newFriend, function (data) {
-
-            alert("Submitted!");
-           });
-        // console.log(newFriend);
-    });
-</script>
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
 
 </html>
