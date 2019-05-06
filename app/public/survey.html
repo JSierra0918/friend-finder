@@ -201,97 +201,17 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <div class="modal-stuff">
-                    <h1>You matched with: </h1>
-            </div>
-            
             <div class="flex-container">
-                    <div class="card2">
-                          
-                                <img src= "https://upload.wikimedia.org/wikipedia/en/8/8e/Pearl_Krabs.svg"  alt="" style="width:100%">
-                                <p class="title">${JSON.stringify(matchInfo[0].name)}</p>
-                                </div>
-                         </div>`
+
             </div>
         </div>
-
     </div>
 
 
+    <!-- END CUSTOM MODAL =========================================== -->
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <script type="text/javascript">
-        $("button").on("click", function (event) {
-            // event.preventDefault();
-            modal.style.display = "block";
-
-            var scoreArray = [];
-            var userImage = $("#imagePhoto").attr('src');
-            //store user image into session so we can reuse users info
-            sessionStorage.setItem("userImage", userImage);
-
-            for (let i = 1; i <= 10; i++) {
-                var options = $("#option" + i);
-                if (options.val() === NaN) {
-                    console.log("Is NAN!!");
-                    options.addClass("nan");
-                    alert("You must fill out all forms");
-                } else {
-                    if (options.hasClass("nan")) {
-                        options.removeClass("nan");
-                    }
-                    scoreArray.push(parseInt(options.val()));
-                }
-            }
-
-            var newFriend = {
-                name: $("#name").val().trim(),
-                // photo: $("#image").val().trim(),
-                photo: sessionStorage.getItem("userImage"),
-                scores: scoreArray
-            };
-
-            $.post("/api/survey", newFriend, function (data) {
-
-                // alert(JSON.stringify(data[0]));
-
-                console.log(data);
-
-                var userInfo = data[0].newFriend;
-                var matchInfo = data[1].matchingFriend;
-
-                console.log(userInfo);
-                console.log(matchInfo[0]);
-
-
-                $(".modal-stuff").append(`
-                <div class="card2">
-                    <h1>You matched with: </h1>
-                        <img src= ${JSON.stringify(matchInfo[0].photo)} alt="" style="width:100%">
-                        <p class="title">${JSON.stringify(matchInfo[0].name)}</p>
-                        </div>
-                 </div>`);
-
-                // $("#myModal").modal("show");
-
-                modal.style.display = "block";
-            });
-        });
-
-        function previewFile() {
-            var preview = document.querySelector('img');
-            var file = document.querySelector('input[type=file]').files[0];
-            var reader = new FileReader();
-
-            reader.addEventListener("load", function () {
-                preview.src = reader.result;
-            }, false);
-
-            if (file) {
-                reader.readAsDataURL(file);
-            }
-        }
-    </script>
     <script>
         // Get the modal
         var modal = document.getElementById('myModal');
@@ -314,6 +234,94 @@
             }
         }
     </script>
+    <script type="text/javascript">
+        $("button").on("click", function (event) {
+            // event.preventDefault();
+            // modal.style.display = "block";
+
+            var scoreArray = [];
+            var userImage = $("#imagePhoto").attr('src');
+
+            //store user image into session so we can reuse users info
+            sessionStorage.setItem("userImage", userImage);
+
+            for (let i = 1; i <= 10; i++) {
+                var options = $("#option" + i);
+                if (options.val() === NaN) {
+                    console.log("Is NAN!!");
+                    options.addClass("nan");
+                    alert("You must fill out all forms");
+                } else {
+                    if (options.hasClass("nan")) {
+                        options.removeClass("nan");
+                    }
+                    scoreArray.push(parseInt(options.val()));
+                }
+            }
+
+            var newFriend = {
+                name: $("#name").val().trim(),
+                // photo: $("#image").val().trim(),
+                photo: "",
+                scores: scoreArray
+            };
+
+            $.post("/api/survey", newFriend, function (data) {
+
+                // alert(JSON.stringify(data[0]));
+
+                console.log(data);
+
+                var userInfo = data[0].newFriend;
+                var matchInfo = data[1].matchingFriend;
+                var userPhoto = sessionStorage.getItem("userImage");
+
+                createSelf(userInfo, userPhoto);
+                createMatches(matchInfo)
+                // $("#myModal").modal("show");
+                modal.style.display = "block";
+            });
+        });
+
+        function previewFile() {
+            var preview = document.querySelector('img');
+            var file = document.querySelector('input[type=file]').files[0];
+            var reader = new FileReader();
+
+            reader.addEventListener("load", function () {
+                preview.src = reader.result;
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function createSelf(self, image) {
+
+            $(".self").remove();
+            self.photo = image;
+            $(".modal-content").prepend(`
+                <div class="self">
+                        <p class="selfTitle">${JSON.stringify(self.name)}</p>
+                        <img src= ${JSON.stringify(self.photo)} alt="" style="width:100%" class="self-image">
+                        </div>
+                 </div>`);
+        }
+
+        function createMatches(mI) {
+            for (let i = 0; i < mI.length; i++) {
+                $(".flex-container").append(`
+                <div class="card2">
+                    <h1>You matched with: </h1>
+                        <img src= ${JSON.stringify(mI[i].photo)} alt="" style="width:100%">
+                        <p class="title">${JSON.stringify(mI[i].name)}</p>
+                        </div>
+                 </div>`);
+            }
+        }
+    </script>
+
 </body>
 
 </html>

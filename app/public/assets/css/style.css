@@ -7,13 +7,14 @@
   max-width: 880px;
   width: 100%;
   padding: 20px;
+  margin: 0 auto;
 }
 
 .card2 {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   max-width: 300px;
+  width: 100%;
   text-align: center;
-  font-family: arial;
 }
 
 .card2 img {
@@ -28,6 +29,7 @@
   background-color: #CDDC39;
   padding: 40px;
   box-sizing: content-box;
+  padding: 5px;
 }
 
 button {
@@ -41,6 +43,27 @@ button {
   cursor: pointer;
   width: 100%;
   font-size: 18px;
+}
+
+.self {
+  display: flex;
+  flex-flow: column;
+  height: 250px;
+  align-items: center;
+}
+
+img.self-image {
+  max-width: 300px;
+  width: 100%;
+  height: auto;
+}
+
+.selfTitle {
+  color: #000;
+  font-size: 24px;
+  background-color: grey;
+  text-align: center;
+
 }
 
 .nan {
