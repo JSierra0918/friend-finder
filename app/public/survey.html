@@ -201,36 +201,17 @@
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <div class="modal-stuff"></div>
-
+            <div class="modal-stuff">
+                    <h1>You matched with: </h1>
+            </div>
+            
             <div class="flex-container">
-                <div class="card2">
-                    <img src='https://en.wikipedia.org/wiki/Patrick_Star#/media/File:Patrick_Star.svg' alt=""
-                        style="width:100%">
-                    <h1>${JSON.stringify(matchInfo[0].name)}</h1>
-                    <p class="title"></p>
-                    <p>Matching score: </p>
-                    <div style="margin: 24px 0;">
-                        <a href="#"><i class="fa fa-twitter"></i></a>
-                        <a href="#"><i class="fa fa-dribbble"></i></a>
-                        <a href="#"><i class="fa fa-facebook"></i></a>
-                        <a href="#"><i class="fa fa-linkedin"></i></a>
-                        <p><button>Contact</button></p>
-                    </div>
-                </div>
-                <div class="card2">
-                        <img src='https://static.comicvine.com/uploads/original/11132/111325030/5880119-spongebob%20squarepants%20gary%20the%20snail.jpg' alt=""
-                            style="width:100%">
-                        <p class="title">sponge</p>
-                        <p>Matching score: </p>
-                        <div style="margin: 24px 0;">
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-dribbble"></i></a>
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-linkedin"></i></a>
-                            <p><button>Contact</button></p>
-                        </div>
-                    </div>
+                    <div class="card2">
+                          
+                                <img src= "https://upload.wikimedia.org/wikipedia/en/8/8e/Pearl_Krabs.svg"  alt="" style="width:100%">
+                                <p class="title">${JSON.stringify(matchInfo[0].name)}</p>
+                                </div>
+                         </div>`
             </div>
         </div>
 
@@ -285,16 +266,9 @@
 
                 $(".modal-stuff").append(`
                 <div class="card2">
-                        <img src= '${JSON.stringify(matchInfo[0].photo)}' alt="" style="width:100%">
-                        <h1>${JSON.stringify(matchInfo[0].name)}</h1>
-                        <p class="title"></p>
-                        <p>Matching score: </p>
-                         <div style="margin: 24px 0;">
-                            <a href="#"><i class="fa fa-twitter"></i></a>  
-                            <a href="#"><i class="fa fa-dribbble"></i></a> 
-                            <a href="#"><i class="fa fa-facebook"></i></a> 
-                            <a href="#"><i class="fa fa-linkedin"></i></a>  
-                            <p><button>Contact</button></p>
+                    <h1>You matched with: </h1>
+                        <img src= ${JSON.stringify(matchInfo[0].photo)} alt="" style="width:100%">
+                        <p class="title">${JSON.stringify(matchInfo[0].name)}</p>
                         </div>
                  </div>`);
 

@@ -1,68 +1,74 @@
-form.survey {
-    display: flex;
-    justify-content: center;
-}
-
 .flex-container {
-display: flex;
-justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 }
 
 .survey {
-    max-width: 600px;
-    width: 100%;
-
+  max-width: 880px;
+  width: 100%;
+  padding: 20px;
 }
 
 .card2 {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    max-width: 300px;
-    text-align: center;
-    font-family: arial;
-  }
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  text-align: center;
+  font-family: arial;
+}
 
 .card2 img {
   max-width: 200px;
   width: 100%;
   height: auto;
 }
-  
-  .title {
-    color: grey;
-    font-size: 18px;
-    background-color: red;
-  }
-  
-  button {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
-    color: white;
-    background-color: #000;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-    font-size: 18px;
-  }
 
-  .nan {
-    color: red;
-  }
+.title {
+  color: grey;
+  font-size: 18px;
+  background-color: #CDDC39;
+  padding: 40px;
+  box-sizing: content-box;
+}
 
-  /* The Modal (background) */
+button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.nan {
+  color: red;
+}
+
+/* The Modal (background) */
 .modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  display: none;
+  /* Hidden by default */
+  position: fixed;
+  /* Stay in place */
+  z-index: 1;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
   left: 0;
   top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
 }
 
 /* Modal Content */

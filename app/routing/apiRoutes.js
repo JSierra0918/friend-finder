@@ -52,7 +52,7 @@ module.exports = function (app) {
             console.log(differenceTotal + " Person " + match.name);
         }
         // push the new user to friend.
-        console.log("BEST MATCH NUMBER is " + bestMatch + " and that person is " + console.table(matchingFriend));
+        console.log("BEST MATCH NUMBER is " + bestMatch + " and that person is " +match.name);
 
         //only take the last 3 matches.
         surveyResults =
