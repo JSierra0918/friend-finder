@@ -211,22 +211,17 @@
     <!-- END CUSTOM MODAL =========================================== -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
     <script>
         // Get the modal
         var modal = document.getElementById('myModal');
-
         // Get the button that opens the modal
         var btn = document.getElementById("myBtn");
-
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
-
         // When the user clicks on <span> (x), close the modal
         span.onclick = function () {
             modal.style.display = "none";
         }
-
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
             if (event.target == modal) {
@@ -238,91 +233,74 @@
         $("button").on("click", function (event) {
             // event.preventDefault();
             // modal.style.display = "block";
-
             var scoreArray = [];
             var userImage = $("#imagePhoto").attr('src');
-            var isValid;
-
             //store user image into session so we can reuse users info
             sessionStorage.setItem("userImage", userImage);
-
             for (let i = 1; i <= 10; i++) {
                 var options = $("#option" + i);
-                console.log(options.val());
-                if (options.val() === "Select an Option") {
+                if (options.val() === NaN) {
+                    console.log("Is NAN!!");
                     options.addClass("nan");
-                    isValid = false;
+                    alert("You must fill out all forms");
+                } else {
+                    if (options.hasClass("nan")) {
+                        options.removeClass("nan");
+                    }
+                    scoreArray.push(parseInt(options.val()));
                 }
-         
-                if (options.hasClass("nan")) {
-                    options.removeClass("nan");
-                }
-                
-                scoreArray.push(parseInt(options.val()));
-
-                var newFriend = {
-                    name: $("#name").val().trim(),
-                    // photo: $("#image").val().trim(),
-                    photo: "",
-                    scores: scoreArray
-                };
-
-                $.post("/api/survey", newFriend, function (data) {
-
-                    // alert(JSON.stringify(data[0]));
-
-                    console.log(data);
-
-                    var userInfo = data[0].newFriend;
-                    var matchInfo = data[1].matchingFriend;
-                    var userPhoto = sessionStorage.getItem("userImage");
-
-                    createSelf(userInfo, userPhoto);
-                    createMatches(matchInfo)
-                    // $("#myModal").modal("show");
-                    modal.style.display = "block";
-                });
-            
             }
-
-
+            var newFriend = {
+                name: $("#name").val().trim(),
+                // photo: $("#image").val().trim(),
+                photo: "",
+                scores: scoreArray
+            };
+            $.post("/api/survey", newFriend, function (data) {
+                // alert(JSON.stringify(data[0]));
+                console.log(data);
+                var userInfo = data[0].newFriend;
+                var matchInfo = data[1].matchingFriend;
+                var userPhoto = sessionStorage.getItem("userImage");
+                createSelf(userInfo, userPhoto);
+                createMatches(matchInfo)
+                // $("#myModal").modal("show");
+                modal.style.display = "block";
+            });
         });
 
         function previewFile() {
             var preview = document.querySelector('img');
             var file = document.querySelector('input[type=file]').files[0];
             var reader = new FileReader();
-
             reader.addEventListener("load", function () {
                 preview.src = reader.result;
             }, false);
-
             if (file) {
                 reader.readAsDataURL(file);
             }
         }
 
         function createSelf(self, image) {
-
             $(".self").remove();
             self.photo = image;
             $(".modal-content").prepend(`
-                <div class="self">
-                        <p class="selfTitle">${JSON.stringify(self.name)}</p>
-                        <img src= ${JSON.stringify(self.photo)} alt="" style="width:100%" class="self-image">
-                        </div>
-                 </div>`);
+                    <div class="self">
+                            <p class="selfTitle">${JSON.stringify(self.name)}</p>
+                            <img src= ${JSON.stringify(self.photo)} alt="" style="width:100%" class="self-image">
+                            </div>
+                     </div>`);
         }
 
         function createMatches(mI) {
             for (let i = 0; i < mI.length; i++) {
                 $(".flex-container").append(`
-                <div class="card2">
-                    <h1>You matched with: </h1>
-                        <img src= ${JSON.stringify(mI[i].photo)} alt="" style="width:100%">
-                        <p class="title">${JSON.stringify(mI[i].name)}</p>
-                        </div>
-                 </div>`);
+                    <div class="card2">
+                        <h1>You matched with: </h1>
+                            <img src= ${JSON.stringify(mI[i].photo)} alt="" style="width:100%">
+                            <p class="title">${JSON.stringify(mI[i].name)}</p>
+                            </div>
+                     </div>`);
             }
         }
     </script>
