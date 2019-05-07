@@ -241,46 +241,51 @@
 
             var scoreArray = [];
             var userImage = $("#imagePhoto").attr('src');
+            var isValid;
 
             //store user image into session so we can reuse users info
             sessionStorage.setItem("userImage", userImage);
 
             for (let i = 1; i <= 10; i++) {
                 var options = $("#option" + i);
-                if (options.val() === NaN) {
-                    console.log("Is NAN!!");
+                console.log(options.val());
+                if (options.val() === "Select an Option") {
                     options.addClass("nan");
-                    alert("You must fill out all forms");
-                } else {
-                    if (options.hasClass("nan")) {
-                        options.removeClass("nan");
-                    }
-                    scoreArray.push(parseInt(options.val()));
+                    isValid = false;
                 }
+         
+                if (options.hasClass("nan")) {
+                    options.removeClass("nan");
+                }
+                
+                scoreArray.push(parseInt(options.val()));
+
+                var newFriend = {
+                    name: $("#name").val().trim(),
+                    // photo: $("#image").val().trim(),
+                    photo: "",
+                    scores: scoreArray
+                };
+
+                $.post("/api/survey", newFriend, function (data) {
+
+                    // alert(JSON.stringify(data[0]));
+
+                    console.log(data);
+
+                    var userInfo = data[0].newFriend;
+                    var matchInfo = data[1].matchingFriend;
+                    var userPhoto = sessionStorage.getItem("userImage");
+
+                    createSelf(userInfo, userPhoto);
+                    createMatches(matchInfo)
+                    // $("#myModal").modal("show");
+                    modal.style.display = "block";
+                });
+            
             }
 
-            var newFriend = {
-                name: $("#name").val().trim(),
-                // photo: $("#image").val().trim(),
-                photo: "",
-                scores: scoreArray
-            };
 
-            $.post("/api/survey", newFriend, function (data) {
-
-                // alert(JSON.stringify(data[0]));
-
-                console.log(data);
-
-                var userInfo = data[0].newFriend;
-                var matchInfo = data[1].matchingFriend;
-                var userPhoto = sessionStorage.getItem("userImage");
-
-                createSelf(userInfo, userPhoto);
-                createMatches(matchInfo)
-                // $("#myModal").modal("show");
-                modal.style.display = "block";
-            });
         });
 
         function previewFile() {
